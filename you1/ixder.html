@@ -1,0 +1,1373 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#211438">
+<title>Little World of Love 💗</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Itim&family=Nunito:wght@400;700;800&display=swap');
+
+:root {
+  --pink: #ff9ecb;
+  --purple: #bb9bff;
+  --white: #fff7fc;
+  --glass: #ffffff12;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Nunito', 'Itim', sans-serif;
+  color: var(--white);
+  background:
+    radial-gradient(ellipse at 15% 10%, #593463 0%, transparent 40%),
+    radial-gradient(ellipse at 90% 80%, #3d285e 0%, transparent 45%),
+    linear-gradient(145deg, #130f29, #241331 60%, #17102c);
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 3px;
+}
+
+header {
+  text-align: center;
+  padding: 30px 15px 10px;
+}
+
+.brand {
+  font-family: 'Itim', cursive;
+  font-size: clamp(30px, 7vw, 45px);
+  color: #ffd1e8;
+  text-shadow: 0 0 25px #ff8ec5;
+  margin: 0;
+}
+
+header p {
+  color: #d9c7ef;
+  margin: 8px 0;
+}
+
+.screen {
+  width: min(100% - 28px, 920px);
+  margin: 20px auto 50px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.hero {
+  text-align: center;
+  padding: 18px 10px 28px;
+}
+
+.hero h2 {
+  font-size: clamp(22px, 5vw, 32px);
+  margin: 8px 0;
+}
+
+.hero p {
+  color: #d7c7eb;
+  line-height: 1.8;
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+}
+
+.game-card {
+  min-height: 155px;
+  padding: 19px 13px;
+  text-align: left;
+  color: white;
+  border: 1px solid #ffffff24;
+  border-radius: 23px;
+  background: var(--glass);
+  transition: transform .2s, border-color .2s, background .2s;
+}
+
+.game-card:hover {
+  transform: translateY(-4px);
+  border-color: #ffb9de;
+  background: #ffffff20;
+}
+
+.game-card .emoji {
+  display: block;
+  font-size: 35px;
+  margin-bottom: 10px;
+}
+
+.game-card strong {
+  display: block;
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+.game-card small {
+  display: block;
+  color: #d7c8e8;
+  line-height: 1.6;
+  font-size: 12px;
+}
+
+.panel {
+  padding: clamp(18px, 5vw, 30px);
+  text-align: center;
+  border: 1px solid #ffffff27;
+  border-radius: 28px;
+  background: #ffffff0d;
+  box-shadow: 0 20px 65px #00000025;
+  overflow: hidden;
+}
+
+.panel h2 {
+  color: #ffd1e8;
+  margin: 3px 0 12px;
+  font-size: clamp(23px, 5vw, 30px);
+}
+
+.panel p {
+  line-height: 1.85;
+  color: #eee0f4;
+}
+
+.back-btn, .action-btn, .soft-btn {
+  border: 0;
+  border-radius: 30px;
+  padding: 12px 20px;
+  margin: 5px;
+  transition: transform .2s, filter .2s;
+}
+
+.back-btn {
+  color: white;
+  background: #ffffff17;
+  border: 1px solid #ffffff25;
+}
+
+.action-btn {
+  color: #451d40;
+  background: linear-gradient(110deg, #ffb8dc, #e6cbff);
+  font-weight: 800;
+  box-shadow: 0 6px 20px #e685c725;
+}
+
+.soft-btn {
+  color: white;
+  background: #ffffff14;
+  border: 1px solid #ffffff35;
+}
+
+.back-btn:hover, .action-btn:hover, .soft-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+
+.toolbar {
+  margin-bottom: 12px;
+}
+
+.status {
+  min-height: 30px;
+  color: #ffd4e9 !important;
+  margin: 12px 0;
+}
+
+.big-emoji {
+  font-size: 65px;
+  margin: 12px auto;
+}
+
+.ending {
+  padding: 16px 3px;
+  animation: reveal .8s ease;
+}
+
+.ending .big-emoji {
+  font-size: 75px;
+}
+
+.ending h2 {
+  font-family: 'Itim', cursive;
+}
+
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(15px) scale(.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* GAME 1: Catch the heart */
+
+.playfield {
+  position: relative;
+  height: 270px;
+  border-radius: 22px;
+  background: linear-gradient(140deg, #35204f, #6b345e);
+  border: 1px solid #ffffff20;
+  overflow: hidden;
+  margin: 18px 0;
+}
+
+.target-heart {
+  position: absolute;
+  left: 40%;
+  top: 40%;
+  border: 0;
+  background: transparent;
+  padding: 4px;
+  font-size: 42px;
+  filter: drop-shadow(0 0 12px #ff91c8);
+  animation: heartbeat 1s infinite;
+}
+
+@keyframes heartbeat {
+  50% { transform: scale(1.16); }
+}
+
+/* GAME 2: Memory cards */
+
+.memory-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 9px;
+  max-width: 440px;
+  margin: 20px auto;
+}
+
+.memory-card {
+  min-height: 73px;
+  border-radius: 14px;
+  border: 1px solid #ffffff2a;
+  background: linear-gradient(145deg, #9d74c8, #634b8f);
+  color: white;
+  font-size: 29px;
+  position: relative;
+}
+
+.memory-card .front {
+  display: none;
+}
+
+.memory-card.open, .memory-card.matched {
+  background: #ffe3f1;
+  color: #53354e;
+}
+
+.memory-card.open .back,
+.memory-card.matched .back {
+  display: none;
+}
+
+.memory-card.open .front,
+.memory-card.matched .front {
+  display: inline;
+}
+
+.memory-card.matched {
+  border-color: #a9efcd;
+}
+
+/* GAME 3: Scratch card */
+
+.scratch-area {
+  position: relative;
+  max-width: 360px;
+  height: 170px;
+  margin: 20px auto;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #ffdeef;
+  color: #73375e;
+}
+
+.scratch-prize {
+  height: 100%;
+  display: grid;
+  place-content: center;
+  padding: 15px;
+  line-height: 1.8;
+}
+
+#scratchCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+/* GAME 4: Fortune wheel */
+
+.wheel-wrap {
+  position: relative;
+  width: min(68vw, 255px);
+  margin: 22px auto;
+}
+
+.wheel {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 6px solid #ffe2f1;
+  background: conic-gradient(
+    #ff91c7 0deg 45deg,
+    #b79cff 45deg 90deg,
+    #ffcb91 90deg 135deg,
+    #9fe8d0 135deg 180deg,
+    #f5a8ce 180deg 225deg,
+    #8f88e9 225deg 270deg,
+    #ffd9a3 270deg 315deg,
+    #e9a4fa 315deg 360deg
+  );
+  box-shadow: 0 0 30px #e28cd940;
+  transition: transform 3.5s cubic-bezier(.12,.72,.08,1);
+  display: grid;
+  place-items: center;
+  font-size: 48px;
+}
+
+.pointer {
+  position: absolute;
+  top: -17px;
+  left: calc(50% - 13px);
+  font-size: 27px;
+  z-index: 2;
+}
+
+.wheel-center {
+  display: grid;
+  place-items: center;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: #fff6fc;
+  border: 4px solid white;
+}
+
+/* GAME 5: Stars */
+
+.star-board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  max-width: 390px;
+  margin: 20px auto;
+}
+
+.star-cell {
+  min-height: 77px;
+  border-radius: 17px;
+  border: 1px solid #ffffff20;
+  background: #ffffff0c;
+  color: #ffe7a7;
+  font-size: 30px;
+}
+
+.star-cell.found {
+  background: #ffb5d91f;
+  border-color: #ffb4dd;
+}
+
+/* GAME 6: Flower */
+
+.grow-display {
+  min-height: 145px;
+  display: grid;
+  place-items: center;
+  font-size: 85px;
+  animation: floaty 3s ease-in-out infinite;
+}
+
+@keyframes floaty {
+  50% { transform: translateY(-8px); }
+}
+
+.progress-track {
+  height: 10px;
+  background: #ffffff20;
+  border-radius: 15px;
+  overflow: hidden;
+  max-width: 300px;
+  margin: 15px auto;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #8df0ae, #ffc1e1);
+  transition: width .4s;
+}
+
+/* GAME 7: Letter */
+
+.choice-group {
+  margin: 17px 0;
+  text-align: left;
+}
+
+.choice-group h3 {
+  font-size: 16px;
+  color: #ffd5ea;
+}
+
+.choice-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.choice {
+  padding: 10px 13px;
+  border-radius: 16px;
+  border: 1px solid #ffffff30;
+  background: #ffffff0b;
+  color: white;
+  font-size: 14px;
+}
+
+.choice.selected {
+  background: #ffb9dd;
+  color: #4a2342;
+  border-color: #fff0f9;
+}
+
+.letter-output {
+  width: 100%;
+  min-height: 145px;
+  padding: 15px;
+  border-radius: 16px;
+  border: 1px solid #ffb9db50;
+  color: #4d2d48;
+  background: #fff1f8;
+  font: 17px/1.9 'Itim', cursive;
+  resize: vertical;
+}
+
+/* GAME 8: Mood */
+
+.mood-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 22px 0;
+}
+
+.mood-btn {
+  border: 1px solid #ffffff24;
+  border-radius: 18px;
+  background: #ffffff0b;
+  color: white;
+  padding: 17px 8px;
+  font-size: 16px;
+}
+
+.mood-btn span {
+  display: block;
+  font-size: 31px;
+  margin-bottom: 7px;
+}
+
+/* GAME 9: Story */
+
+.story-box {
+  background: #ffffff0b;
+  border: 1px solid #ffffff1d;
+  border-radius: 20px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.story-choice {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 14px 16px;
+  margin: 9px 0;
+  background: #ffffff0b;
+  border: 1px solid #ffffff2b;
+  border-radius: 16px;
+  color: white;
+}
+
+/* GAME 10: Word puzzle */
+
+.word-target {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 25px 0 15px;
+}
+
+.word-slot {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 45px;
+  border-radius: 9px;
+  border: 1px solid #ffbfe0;
+  background: #ffffff0b;
+  color: #ffe0f0;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.letter-tiles {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0;
+}
+
+.letter-tile {
+  width: 43px;
+  height: 46px;
+  border-radius: 12px;
+  border: 1px solid #ffffff3d;
+  background: #bda0ee;
+  color: #321b46;
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.letter-tile:disabled {
+  opacity: .25;
+  cursor: default;
+}
+
+footer {
+  text-align: center;
+  color: #bcaccf;
+  font-size: 13px;
+  padding: 10px 15px 30px;
+}
+
+@media (max-width: 420px) {
+  .game-grid { gap: 9px; }
+  .game-card { padding: 15px 11px; min-height: 145px; }
+  .memory-grid { gap: 6px; }
+  .memory-card { min-height: 64px; font-size: 25px; }
+  .panel { padding: 18px 13px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1 class="brand">Little World of Love 💗</h1>
+  <p>10 เกมเล็ก ๆ ที่ตั้งใจสร้างขึ้นเพื่อเธอ</p>
+</header>
+
+<section class="screen" id="home">
+  <div class="hero">
+    <h2>วันนี้อยากให้เธอรู้สึกแบบไหน? ✨</h2>
+    <p>เลือกเกมที่ชอบ แล้วค้นพบข้อความที่ซ่อนอยู่ข้างใน</p>
+  </div>
+  <div class="game-grid" id="gameGrid"></div>
+</section>
+
+<section class="screen hidden" id="play">
+  <div class="toolbar">
+    <button class="back-btn" id="backBtn">← กลับไปเลือกเกม</button>
+  </div>
+  <div class="panel">
+    <h2 id="gameTitle"></h2>
+    <div id="gamePanel"></div>
+  </div>
+</section>
+
+<footer>Made with love, just for you 💗</footer>
+
+<script>
+const gameList = [
+  {title:"Catch My Heart",icon:"💗",desc:"แตะหัวใจให้ครบ 5 ดวง แล้วอ่านข้อความคิดถึง",id:1},
+  {title:"Memory of Love",icon:"🧩",desc:"จับคู่ภาพที่เหมือนกันเพื่อเปิดความลับ",id:2},
+  {title:"Scratch My Love",icon:"🎫",desc:"ขูดการ์ดเพื่อค้นหาข้อความพิเศษ",id:3},
+  {title:"Love Fortune Wheel",icon:"🎡",desc:"หมุนวงล้อสุ่มคำบอกรักจากหัวใจ",id:4},
+  {title:"Find My Stars",icon:"🌟",desc:"ตามหาดาวลับ 3 ดวงบนท้องฟ้า",id:5},
+  {title:"Grow My Flower",icon:"🌷",desc:"รดน้ำให้ดอกไม้เติบโตจนเบ่งบาน",id:6},
+  {title:"Love Letter Maker",icon:"💌",desc:"สร้างจดหมายรักในแบบของตัวเอง",id:7},
+  {title:"How Is Your Heart?",icon:"🫶",desc:"บอกอารมณ์วันนี้ แล้วรับกำลังใจ",id:8},
+  {title:"Our Little Story",icon:"🌙",desc:"เลือกเส้นทางและสร้างเรื่องราวของเรา",id:9},
+  {title:"Unlock LOVEYOU",icon:"🔐",desc:"เรียงตัวอักษรเพื่อปลดล็อกคำบอกรัก",id:10}
+];
+
+const home = document.getElementById('home');
+const play = document.getElementById('play');
+const grid = document.getElementById('gameGrid');
+const panel = document.getElementById('gamePanel');
+const title = document.getElementById('gameTitle');
+
+let currentGame = 1;
+
+grid.innerHTML = gameList.map(g => `
+  <button class="game-card" data-id="${g.id}">
+    <span class="emoji">${g.icon}</span>
+    <strong>${g.title}</strong>
+    <small>${g.desc}</small>
+  </button>
+`).join('');
+
+grid.querySelectorAll('.game-card').forEach(card => {
+  card.addEventListener('click', () => openGame(Number(card.dataset.id)));
+});
+
+document.getElementById('backBtn').addEventListener('click', () => {
+  play.classList.add('hidden');
+  home.classList.remove('hidden');
+});
+
+function openGame(id) {
+  currentGame = id;
+  home.classList.add('hidden');
+  play.classList.remove('hidden');
+  title.textContent = gameList.find(g => g.id === id).title;
+  renderGame(id);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function finish(heading, message, emoji = '💗') {
+  panel.innerHTML = `
+    <div class="ending">
+      <div class="big-emoji">${emoji}</div>
+      <h2>${heading}</h2>
+      <p>${message}</p>
+      <button class="action-btn" id="replay">เล่นเกมนี้อีกครั้ง ↻</button>
+      <button class="soft-btn" id="toMenu">เลือกเกมอื่น ♡</button>
+    </div>
+  `;
+  document.getElementById('replay').onclick = () => renderGame(currentGame);
+  document.getElementById('toMenu').onclick = () => {
+    play.classList.add('hidden');
+    home.classList.remove('hidden');
+  };
+}
+
+function renderGame(id) {
+  switch (id) {
+    case 1: gameCatchHeart(); break;
+    case 2: gameMemory(); break;
+    case 3: gameScratch(); break;
+    case 4: gameWheel(); break;
+    case 5: gameStars(); break;
+    case 6: gameFlower(); break;
+    case 7: gameLetter(); break;
+    case 8: gameMood(); break;
+    case 9: gameStory(); break;
+    case 10: gamePuzzle(); break;
+    default: panel.textContent = 'ไม่พบเกมนี้';
+  }
+}
+
+/* ====================================
+   GAME 1 — CATCH MY HEART
+   แตะหัวใจที่เปลี่ยนตำแหน่ง
+==================================== */
+function gameCatchHeart() {
+  let count = 0;
+
+  panel.innerHTML = `
+    <p>จับหัวใจให้ได้ครบ 5 ดวงนะ</p>
+    <div class="playfield" id="field">
+      <button class="target-heart" id="targetHeart" aria-label="จับหัวใจ">💗</button>
+    </div>
+    <p class="status" id="catchStatus">จับได้แล้ว 0 / 5 ดวง</p>
+  `;
+
+  const field = document.getElementById('field');
+  const heart = document.getElementById('targetHeart');
+  const status = document.getElementById('catchStatus');
+
+  function moveHeart() {
+    heart.style.left = (5 + Math.random() * 75) + '%';
+    heart.style.top = (5 + Math.random() * 68) + '%';
+  }
+
+  heart.addEventListener('click', () => {
+    count++;
+
+    if (count >= 5) {
+      finish(
+        'จับหัวใจได้แล้ว! 💗',
+        'จริง ๆ แล้วหัวใจดวงนี้อยากบอกว่า ไม่ว่าจะอยู่ตรงไหน เราก็ยังคิดถึงเธอเสมอนะ',
+        '💘'
+      );
+      return;
+    }
+
+    status.textContent = `จับได้แล้ว ${count} / 5 ดวง`;
+    moveHeart();
+  });
+
+  moveHeart();
+}
+
+/* ====================================
+   GAME 2 — MEMORY OF LOVE
+   เกมจับคู่ความจำ
+==================================== */
+function gameMemory() {
+  const faces = ['🌙','💌','🌷','🐻','⭐','🦋'];
+  const cards = [...faces, ...faces].sort(() => Math.random() - .5);
+
+  let first = null;
+  let locked = false;
+  let matched = 0;
+  let turns = 0;
+
+  panel.innerHTML = `
+    <p>เปิดการ์ดทีละ 2 ใบ แล้วจับคู่ภาพให้ครบ</p>
+    <div class="memory-grid" id="memoryGrid"></div>
+    <p class="status" id="memoryStatus">คู่ที่เจอ 0 / 6 · เปิดการ์ด 0 ครั้ง</p>
+  `;
+
+  const memoryGrid = document.getElementById('memoryGrid');
+  const memoryStatus = document.getElementById('memoryStatus');
+
+  cards.forEach((face, index) => {
+    const btn = document.createElement('button');
+    btn.className = 'memory-card';
+    btn.innerHTML = `<span class="back">?</span><span class="front">${face}</span>`;
+    btn.setAttribute('aria-label', 'การ์ดปิดอยู่');
+
+    btn.addEventListener('click', () => {
+      if (locked || btn.classList.contains('matched') ||
+          btn.classList.contains('open')) return;
+
+      btn.classList.add('open');
+
+      if (!first) {
+        first = {btn, face};
+        return;
+      }
+
+      turns++;
+      const second = {btn, face};
+
+      if (first.face === second.face) {
+        first.btn.classList.remove('open');
+        btn.classList.remove('open');
+        first.btn.classList.add('matched');
+        btn.classList.add('matched');
+        matched++;
+
+        first = null;
+        memoryStatus.textContent =
+          `คู่ที่เจอ ${matched} / 6 · เปิดการ์ด ${turns} ครั้ง`;
+
+        if (matched === 6) {
+          finish(
+            'ความทรงจำที่สวยงาม 🧩',
+            'บางสิ่งอาจต้องใช้เวลาค้นหา แต่สำหรับเรา การมีเธอเป็นความทรงจำที่มีค่ามากที่สุด',
+            '🌷'
+          );
+        }
+      } else {
+        locked = true;
+        const oldFirst = first;
+        first = null;
+
+        setTimeout(() => {
+          oldFirst.btn.classList.remove('open');
+          btn.classList.remove('open');
+          locked = false;
+          memoryStatus.textContent =
+            `คู่ที่เจอ ${matched} / 6 · เปิดการ์ด ${turns} ครั้ง`;
+        }, 750);
+      }
+    });
+
+    memoryGrid.appendChild(btn);
+  });
+}
+
+/* ====================================
+   GAME 3 — SCRATCH MY LOVE
+   ขูดเปิดข้อความ
+==================================== */
+function gameScratch() {
+  panel.innerHTML = `
+    <p>มีความลับซ่อนอยู่ ลองใช้นิ้วขูดการ์ดดูสิ</p>
+    <div class="scratch-area" id="scratchArea">
+      <div class="scratch-prize">
+        <strong style="font-size:25px">YOU ARE SPECIAL 💗</strong>
+        <span>เธอเป็นคนสำคัญของเรานะ</span>
+      </div>
+      <canvas id="scratchCanvas" width="360" height="170"></canvas>
+    </div>
+    <p class="status" id="scratchStatus">ลากนิ้วหรือเมาส์บนการ์ดเพื่อเปิดข้อความ</p>
+  `;
+
+  const canvas = document.getElementById('scratchCanvas');
+  const ctx = canvas.getContext('2d');
+  const status = document.getElementById('scratchStatus');
+
+  ctx.fillStyle = '#bba8cc';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  ctx.fillStyle = '#fff7fc';
+  ctx.font = 'bold 22px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('ขูดเปิดความลับ', 180, 78);
+  ctx.font = '18px sans-serif';
+  ctx.fillText('♡ ♡ ♡', 180, 112);
+
+  ctx.globalCompositeOperation = 'destination-out';
+
+  let scratching = false;
+  let strokes = 0;
+  let completed = false;
+
+  function scratch(event) {
+    if (!scratching || completed) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const x = (event.clientX - rect.left) * canvas.width / rect.width;
+    const y = (event.clientY - rect.top) * canvas.height / rect.height;
+
+    ctx.beginPath();
+    ctx.arc(x, y, 23, 0, Math.PI * 2);
+    ctx.fill();
+
+    strokes++;
+
+    if (strokes > 24 && !completed) {
+      completed = true;
+      canvas.style.opacity = '0';
+      canvas.style.pointerEvents = 'none';
+      status.textContent = 'เปิดข้อความได้แล้ว 💗';
+
+      setTimeout(() => {
+        finish(
+          'ความลับจากหัวใจ 💌',
+          'I may not say it every day, but you mean the world to me. — เราอาจไม่ได้พูดทุกวัน แต่เธอมีความหมายกับเรามากจริง ๆ',
+          '💝'
+        );
+      }, 650);
+    }
+  }
+
+  canvas.addEventListener('pointerdown', event => {
+    scratching = true;
+    canvas.setPointerCapture(event.pointerId);
+    scratch(event);
+  });
+
+  canvas.addEventListener('pointermove', scratch);
+  canvas.addEventListener('pointerup', () => scratching = false);
+  canvas.addEventListener('pointercancel', () => scratching = false);
+}
+
+/* ====================================
+   GAME 4 — LOVE FORTUNE WHEEL
+   หมุนวงล้อคำบอกรัก
+==================================== */
+function gameWheel() {
+  const messages = [
+    'วันนี้อย่าลืมยิ้มเยอะ ๆ นะ เพราะรอยยิ้มของเธอสำคัญกับเรา 🌷',
+    'ภารกิจวันนี้: รับกอดผ่านหน้าจอหนึ่งที 🫂',
+    'ข้อความลับ: เราคิดถึงเธอมากกว่าที่พูดออกไป 💌',
+    'คำทำนายวันนี้: มีคนคนหนึ่งรักเธอมากอยู่ตรงนี้ 💗',
+    'รางวัลพิเศษ: เธอคือความสุขเล็ก ๆ ที่ยิ่งใหญ่ของเรา ✨',
+    'คำอวยพร: ขอให้วันนี้ใจดีกับเธอเหมือนที่เธอใจดีกับเรา 🌸',
+    'ประกาศสำคัญ: ไม่ต้องเก่งตลอดเวลาก็ได้ เราอยู่ข้างเธอนะ 🫶',
+    'ข้อความจากเรา: ขอบคุณที่เข้ามาเป็นส่วนหนึ่งในชีวิต 💖'
+  ];
+
+  let rotation = 0;
+
+  panel.innerHTML = `
+    <p>หมุนวงล้อเพื่อรับข้อความพิเศษจากเรา</p>
+    <div class="wheel-wrap">
+      <div class="pointer">▼</div>
+      <div class="wheel" id="wheel">
+        <div class="wheel-center">💗</div>
+      </div>
+    </div>
+    <button class="action-btn" id="spinBtn">หมุนวงล้อ ✨</button>
+    <p class="status" id="wheelResult">วงล้อมีข้อความสำหรับเธออยู่</p>
+  `;
+
+  const wheel = document.getElementById('wheel');
+  const spinBtn = document.getElementById('spinBtn');
+  const result = document.getElementById('wheelResult');
+
+  spinBtn.addEventListener('click', () => {
+    spinBtn.disabled = true;
+    result.textContent = 'กำลังค้นหาข้อความจากหัวใจ...';
+
+    rotation += 1440 + Math.random() * 360;
+    wheel.style.transform = `rotate(${rotation}deg)`;
+
+    const chosen = messages[Math.floor(Math.random() * messages.length)];
+
+    setTimeout(() => {
+      result.textContent = chosen;
+      spinBtn.disabled = false;
+      spinBtn.textContent = 'หมุนรับข้อความอีกครั้ง 💞';
+    }, 3600);
+  });
+}
+
+/* ====================================
+   GAME 5 — FIND MY STARS
+   ตามหาดาวที่ซ่อนหัวใจ
+==================================== */
+function gameStars() {
+  const targets = [];
+
+  while (targets.length < 3) {
+    const n = Math.floor(Math.random() * 9);
+    if (!targets.includes(n)) targets.push(n);
+  }
+
+  let found = 0;
+  let missed = 0;
+
+  panel.innerHTML = `
+    <p>ในกลุ่มดาวเหล่านี้ มีดาวหัวใจซ่อนอยู่ 3 ดวง</p>
+    <div class="star-board" id="starBoard"></div>
+    <p class="status" id="starStatus">ค้นพบแล้ว 0 / 3 ดวง</p>
+  `;
+
+  const board = document.getElementById('starBoard');
+  const status = document.getElementById('starStatus');
+
+  for (let i = 0; i < 9; i++) {
+    const btn = document.createElement('button');
+    btn.className = 'star-cell';
+    btn.textContent = '✦';
+    btn.setAttribute('aria-label', `ดาวหมายเลข ${i + 1}`);
+
+    btn.addEventListener('click', () => {
+      if (btn.disabled) return;
+      btn.disabled = true;
+
+      if (targets.includes(i)) {
+        found++;
+        btn.textContent = '💖';
+        btn.classList.add('found');
+        status.textContent = `ค้นพบแล้ว ${found} / 3 ดวง`;
+
+        if (found === 3) {
+          finish(
+            'เราเจอดาวของเราแล้ว 🌟',
+            'ไม่ว่าท้องฟ้าจะกว้างแค่ไหน เราก็ยังอยากมองหาดาวดวงเดิมเสมอ เหมือนที่เรายังเลือกเธอในทุก ๆ วัน',
+            '🌌'
+          );
+        }
+      } else {
+        missed++;
+        btn.textContent = '·';
+        status.textContent = 'ดวงนี้ยังไม่ใช่ ลองหาดวงต่อไปนะ ✨';
+      }
+    });
+
+    board.appendChild(btn);
+  }
+}
+
+/* ====================================
+   GAME 6 — GROW MY FLOWER
+   ปลูกดอกไม้แห่งความรัก
+==================================== */
+function gameFlower() {
+  const stages = ['🌰','🌱','🌿','🌷','🌸','💐'];
+  const captions = [
+    'ทุกความรักเริ่มต้นจากสิ่งเล็ก ๆ',
+    'เริ่มเติบโตขึ้นแล้ว',
+    'ค่อย ๆ เติบโตไปด้วยกันนะ',
+    'เริ่มเห็นดอกไม้แห่งความรักแล้ว',
+    'ดอกไม้ใกล้บานแล้วล่ะ',
+    'ความใส่ใจเล็ก ๆ ทำให้ความรักเบ่งบาน'
+  ];
+
+  let water = 0;
+
+  panel.innerHTML = `
+    <p>ช่วยกันดูแลดอกไม้ต้นนี้ให้บานนะ</p>
+    <div class="grow-display" id="plant">🌰</div>
+    <h3 id="plantCaption">ทุกความรักเริ่มต้นจากสิ่งเล็ก ๆ</h3>
+    <div class="progress-track">
+      <div class="progress-fill" id="plantProgress" style="width:0%"></div>
+    </div>
+    <p class="status" id="waterStatus">รดน้ำ 0 / 5 ครั้ง</p>
+    <button class="action-btn" id="waterBtn">💧 รดน้ำให้ดอกไม้</button>
+  `;
+
+  document.getElementById('waterBtn').addEventListener('click', () => {
+    water++;
+    document.getElementById('plant').textContent = stages[water];
+    document.getElementById('plantCaption').textContent = captions[water];
+    document.getElementById('plantProgress').style.width =
+      `${water / 5 * 100}%`;
+    document.getElementById('waterStatus').textContent =
+      `รดน้ำ ${water} / 5 ครั้ง`;
+
+    if (water === 5) {
+      finish(
+        'ดอกไม้ของเราบานแล้ว 🌸',
+        'ความรักก็เหมือนดอกไม้ ไม่จำเป็นต้องเร่งให้โต แค่คอยใส่ใจ ดูแล และเติบโตไปด้วยกันก็พอแล้ว',
+        '💐'
+      );
+    }
+  });
+}
+
+/* ====================================
+   GAME 7 — LOVE LETTER MAKER
+   สร้างจดหมายรักด้วยตัวเอง
+==================================== */
+function gameLetter() {
+  const groups = [
+    {
+      title: '1. เริ่มต้นจดหมายถึงใคร?',
+      options: [
+        'ถึงคนโปรดของเรา 💌',
+        'ถึงเธอที่เราคิดถึงเสมอ 💗',
+        'ถึงเจ้าความสุขของเรา 🌷'
+      ]
+    },
+    {
+      title: '2. อยากบอกความรู้สึกอะไร?',
+      options: [
+        'การมีเธอทำให้วันธรรมดามีความหมายขึ้น',
+        'แม้เราอยู่ไกล แต่เธอใกล้หัวใจเสมอ',
+        'เธอทำให้เราอยากเป็นคนที่ดีขึ้นทุกวัน'
+      ]
+    },
+    {
+      title: '3. อยากให้คำสัญญาอะไร?',
+      options: [
+        'เราจะตั้งใจดูแลความรู้สึกของเราให้ดีที่สุดนะ',
+        'เราจะคอยเชียร์เธอในวันที่ดีและวันที่เหนื่อย',
+        'ไม่ต้องสมบูรณ์แบบก็ได้ แค่เป็นเธอก็พิเศษแล้ว'
+      ]
+    }
+  ];
+
+  const selected = [0, 0, 0];
+
+  panel.innerHTML = `
+    <p>เลือกข้อความจากแต่ละหมวด แล้วประกอบเป็นจดหมายของเธอ</p>
+    <div id="letterChoices"></div>
+    <button class="action-btn" id="makeLetter">เรียบเรียงจดหมาย 💌</button>
+    <div id="letterOutputWrap" class="hidden">
+      <p>จดหมายที่สร้างขึ้นเพื่อคนพิเศษ</p>
+      <textarea class="letter-output" id="letterOutput" readonly></textarea>
+      <button class="soft-btn" id="copyLetter">เลือกข้อความเพื่อคัดลอก</button>
+      <p class="status" id="copyStatus"></p>
+    </div>
+  `;
+
+  const choices = document.getElementById('letterChoices');
+
+  function renderChoices() {
+    choices.innerHTML = groups.map((group, groupIndex) => `
+      <div class="choice-group">
+        <h3>${group.title}</h3>
+        <div class="choice-list">
+          ${group.options.map((option, optionIndex) => `
+            <button class="choice ${selected[groupIndex] === optionIndex ? 'selected' : ''}"
+              data-group="${groupIndex}" data-option="${optionIndex}">
+              ${option}
+            </button>
+          `).join('')}
+        </div>
+      </div>
+    `).join('');
+
+    choices.querySelectorAll('.choice').forEach(btn => {
+      btn.addEventListener('click', () => {
+        selected[Number(btn.dataset.group)] = Number(btn.dataset.option);
+        renderChoices();
+      });
+    });
+  }
+
+  renderChoices();
+
+  document.getElementById('makeLetter').addEventListener('click', () => {
+    const text = selected.map((optionIndex, groupIndex) =>
+      groups[groupIndex].options[optionIndex]
+    ).join('\n\n');
+
+    document.getElementById('letterOutput').value =
+      `${text}\n\nรักเธอนะ 💗`;
+
+    document.getElementById('letterOutputWrap').classList.remove('hidden');
+  });
+
+  document.getElementById('copyLetter').addEventListener('click', () => {
+    const output = document.getElementById('letterOutput');
+    output.focus();
+    output.select();
+    output.setSelectionRange(0, output.value.length);
+
+    let copied = false;
+    try {
+      copied = document.execCommand('copy');
+    } catch (error) {}
+
+    document.getElementById('copyStatus').textContent = copied
+      ? 'คัดลอกข้อความแล้ว นำไปส่งให้คนพิเศษได้เลย 💗'
+      : 'เลือกข้อความไว้แล้ว กดค้างเพื่อคัดลอกได้เลยนะ 💗';
+  });
+}
+
+/* ====================================
+   GAME 8 — HOW IS YOUR HEART?
+   เลือกความรู้สึกเพื่อรับกำลังใจ
+==================================== */
+function gameMood() {
+  const moods = [
+    {
+      icon:'😊',
+      name:'มีความสุข',
+      message:'ดีใจที่วันนี้เธอมีความสุขนะ ขอให้รอยยิ้มนี้อยู่กับเธอไปนาน ๆ',
+      comfort:'ขอให้วันนี้มีเรื่องดี ๆ เพิ่มขึ้นอีกหลายเรื่องเลย ✨'
+    },
+    {
+      icon:'😔',
+      name:'รู้สึกเหนื่อย',
+      message:'เธอไม่จำเป็นต้องเข้มแข็งตลอดเวลาก็ได้นะ พักก่อนได้เสมอ',
+      comfort:'ส่งกอดอุ่น ๆ ให้หนึ่งทีนะ 🫂 เธอพยายามมามากแล้ว'
+    },
+    {
+      icon:'🥺',
+      name:'อยากได้กำลังใจ',
+      message:'ไม่ว่าวันนี้จะยากแค่ไหน เธอไม่จำเป็นต้องผ่านทุกอย่างอย่างสมบูรณ์แบบ',
+      comfort:'เราเชื่อว่าเธอจะค่อย ๆ ผ่านมันไปได้ทีละก้าวนะ 💗'
+    },
+    {
+      icon:'😶‍🌫️',
+      name:'คิดถึงใครบางคน',
+      message:'บางครั้งความคิดถึงก็มาโดยไม่ต้องมีเหตุผล แค่หัวใจยังจำความรู้สึกนั้นได้',
+      comfort:'ถ้าคนที่เธอคิดถึงคือเรา ขอส่งหัวใจดวงนี้ไปหาเธอนะ 💌'
+    }
+  ];
+
+  panel.innerHTML = `
+    <p>วันนี้หัวใจของเธอเป็นยังไงบ้าง?</p>
+    <div class="mood-grid" id="moodGrid"></div>
+    <div id="moodResult"></div>
+  `;
+
+  const moodGrid = document.getElementById('moodGrid');
+  const result = document.getElementById('moodResult');
+
+  moods.forEach(mood => {
+    const btn = document.createElement('button');
+    btn.className = 'mood-btn';
+    btn.innerHTML = `<span>${mood.icon}</span>${mood.name}`;
+
+    btn.addEventListener('click', () => {
+      result.innerHTML = `
+        <div class="story-box">
+          <div class="big-emoji">${mood.icon}</div>
+          <h3 style="color:#ffd1e8">${mood.name}</h3>
+          <p>${mood.message}</p>
+          <button class="action-btn" id="comfortBtn">รับความอบอุ่นจากเรา 💗</button>
+          <p id="comfortMessage"></p>
+        </div>
+      `;
+
+      document.getElementById('comfortBtn').onclick = () => {
+        document.getElementById('comfortMessage').textContent = mood.comfort;
+      };
+    });
+
+    moodGrid.appendChild(btn);
+  });
+}
+
+/* ====================================
+   GAME 9 — OUR LITTLE STORY
+   เรื่องราวแบบเลือกเส้นทาง
+==================================== */
+function gameStory() {
+  let firstChoice = '';
+  let secondChoice = '';
+
+  function showFirstScene() {
+    panel.innerHTML = `
+      <p>ลองจินตนาการว่า วันนี้เราได้ใช้เวลาด้วยกันหนึ่งวัน</p>
+      <div class="story-box">
+        <div class="big-emoji">🌧️☂️</div>
+        <h3>ฉากที่ 1: ฝนเริ่มตก</h3>
+        <p>เราเดินอยู่ด้วยกัน แล้วจู่ ๆ ฝนก็เริ่มตก เธออยากให้เราทำยังไง?</p>
+        <button class="story-choice" data-choice="warm">
+          ☕ แวะซื้อโกโก้อุ่น ๆ แล้วหาที่นั่งพัก
+        </button>
+        <button class="story-choice" data-choice="walk">
+          ☂️ กางร่มแล้วเดินช้า ๆ ด้วยกัน
+        </button>
+      </div>
+    `;
+
+    panel.querySelectorAll('.story-choice').forEach(btn => {
+      btn.onclick = () => {
+        firstChoice = btn.dataset.choice;
+        showSecondScene();
+      };
+    });
+  }
+
+  function showSecondScene() {
+    panel.innerHTML = `
+      <div class="story-box">
+        <div class="big-emoji">🌆💗</div>
+        <h3>ฉากที่ 2: ช่วงเวลาเงียบ ๆ</h3>
+        <p>เราได้อยู่ด้วยกันแล้ว อยากใช้เวลานี้แบบไหน?</p>
+        <button class="story-choice" data-choice="talk">
+          💬 เล่าเรื่องทุกอย่างที่เกิดขึ้นในวันนี้
+        </button>
+        <button class="story-choice" data-choice="quiet">
+          🫶 นั่งข้างกันเงียบ ๆ แค่ได้อยู่ด้วยกันก็พอ
+        </button>
+      </div>
+    `;
+
+    panel.querySelectorAll('.story-choice').forEach(btn => {
+      btn.onclick = () => {
+        secondChoice = btn.dataset.choice;
+        showEnding();
+      };
+    });
+  }
+
+  function showEnding() {
+    const scenes = {
+      'warm-talk': 'เราแบ่งโกโก้กันดื่ม แล้วเล่าเรื่องตลกให้กันฟัง วันนี้กลายเป็นวันที่ทั้งอบอุ่นและเต็มไปด้วยเสียงหัวเราะ ☕',
+      'warm-quiet': 'เรานั่งข้างกันพร้อมแก้วอุ่น ๆ ไม่ต้องพูดอะไรมาก แค่มีเธอนั่งอยู่ตรงนี้ก็รู้สึกดีแล้ว 🧸',
+      'walk-talk': 'เรากางร่มเดินท่ามกลางเสียงฝน เล่าเรื่องที่เจอมาทั้งวัน แล้วหัวเราะไปพร้อมกัน ☂️',
+      'walk-quiet': 'เราเดินช้า ๆ ใต้ร่มคันเดียวกัน ฟังเสียงฝน แล้วเก็บช่วงเวลาสงบ ๆ นี้ไว้ในหัวใจ 🌧️'
+    };
+
+    const key = `${firstChoice}-${secondChoice}`;
+
+    finish(
+      'เรื่องราวของเรา 💞',
+      `${scenes[key]}<br><br>เรื่องราวที่ดีที่สุดไม่จำเป็นต้องยิ่งใหญ่ แค่มีคนที่อยากแบ่งปันช่วงเวลาเล็ก ๆ ด้วยกันก็พิเศษแล้ว`,
+      '🌙'
+    );
+  }
+
+  showFirstScene();
+}
+
+/* ====================================
+   GAME 10 — UNLOCK LOVEYOU
+   เรียงตัวอักษรให้ถูกลำดับ
+==================================== */
+function gamePuzzle() {
+  const answer = 'LOVEYOU';
+  let selected = [];
+  let statusMessage = '';
+
+  let letters = answer.split('').map((letter, id) => ({
+    letter,
+    id
+  }));
+
+  letters.sort(() => Math.random() - .5);
+
+  panel.innerHTML = `
+    <p>ตัวอักษรถูกสลับที่แล้ว ลองแตะเรียงให้กลายเป็นคำบอกรัก</p>
+    <p>คำใบ้: คำภาษาอังกฤษ 2 คำที่มีความหมายพิเศษ 💌</p>
+    <div class="word-target" id="wordTarget"></div>
+    <div class="letter-tiles" id="letterTiles"></div>
+    <p class="status" id="puzzleStatus">เรียงตัวอักษรให้ถูกต้องนะ</p>
+    <button class="soft-btn" id="undoLetter">ย้อนกลับหนึ่งตัว ←</button>
+    <button class="soft-btn" id="resetLetters">เริ่มเรียงใหม่ ↻</button>
+  `;
+
+  const target = document.getElementById('wordTarget');
+  const tileBox = document.getElementById('letterTiles');
+  const status = document.getElementById('puzzleStatus');
+
+  function drawPuzzle() {
+    target.innerHTML = '';
+
+    for (let i = 0; i < answer.length; i++) {
+      const slot = document.createElement('div');
+      slot.className = 'word-slot';
+      slot.textContent = selected[i] ? selected[i].letter : '·';
+      target.appendChild(slot);
+    }
+
+    tileBox.innerHTML = '';
+
+    letters.forEach(tile => {
+      const btn = document.createElement('button');
+      btn.className = 'letter-tile';
+      btn.textContent = tile.letter;
+      btn.disabled = selected.some(item => item.id === tile.id);
+      btn.setAttribute('aria-label', `ตัวอักษร ${tile.letter}`);
+
+      btn.onclick = () => {
+        if (selected.some(item => item.id === tile.id)) return;
+
+        selected.push(tile);
+
+        if (selected.length === answer.length) {
+          if (selected.map(item => item.letter).join('') === answer) {
+            finish(
+              'ปลดล็อกสำเร็จ! 🔓',
+              'LOVE YOU 💗<br><br>สามคำง่าย ๆ ที่ซ่อนอยู่ในเกมนี้ คือสิ่งที่เราอยากบอกเธอเสมอ<br><br>I love you, today and always.',
+              '💖'
+            );
+            return;
+          } else {
+            statusMessage = 'ยังไม่ถูกนะ ลองย้อนกลับแล้วเรียงใหม่ได้เลย 💗';
+          }
+        } else {
+          statusMessage = 'ดีมาก! ค่อย ๆ เรียงต่อไปนะ ✨';
+        }
+
+        drawPuzzle();
+      };
+
+      tileBox.appendChild(btn);
+    });
+
+    status.textContent = statusMessage ||
+      `เลือกแล้ว ${selected.length} / ${answer.length} ตัวอักษร`;
+  }
+
+  document.getElementById('undoLetter').onclick = () => {
+    selected.pop();
+    statusMessage = 'ย้อนกลับแล้ว เลือกตัวอักษรใหม่ได้เลย';
+    drawPuzzle();
+  };
+
+  document.getElementById('resetLetters').onclick = () => {
+    selected = [];
+    statusMessage = 'เริ่มใหม่ได้เลย ขอให้เจอคำตอบนะ';
+    drawPuzzle();
+  };
+
+  drawPuzzle();
+}
+</script>
+</body>
+</html>
